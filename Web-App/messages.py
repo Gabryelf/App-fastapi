@@ -45,7 +45,7 @@ def get_trip_messages(
 
 
 @router.post("/trip/{trip_id}", response_model=schemas.TripMessageResponse)
-def send_trip_message(
+async def send_trip_message(
         trip_id: int,
         message: schemas.TripMessageCreate,
         db: Session = Depends(get_session),
@@ -75,11 +75,9 @@ def send_trip_message(
     db.commit()
     db.refresh(db_message)
 
-    # Отправка уведомления через WebSocket
     await notify_trip_participants(trip_id, db_message, db)
 
     return db_message
-
 
 @router.websocket("/ws/trip/{trip_id}")
 async def websocket_trip_chat(
@@ -145,5 +143,4 @@ async def broadcast_message(trip_id: int, message: dict):
 
 async def notify_trip_participants(trip_id: int, message: TripMessage, db: Session):
     """Уведомление участников о новом сообщении"""
-    # Здесь можно добавить отправку email/push уведомлений
     pass
