@@ -36,7 +36,7 @@ def create_book(
     return db_book
 
 # ПОЛУЧИТЬ все книги
-@router.get("/", response_model=List[schemas.BookWithAuthor])
+@router.get("/", response_model=List[schemas.TripMessageWithAuthor])
 def get_books(
     skip: int = 0,
     limit: int = 100,
@@ -52,7 +52,7 @@ def get_books(
     return books
 
 # ПОЛУЧИТЬ одну книгу
-@router.get("/{book_id}", response_model=schemas.BookWithAuthor)
+@router.get("/{book_id}", response_model=schemas.TripMessageWithAuthor)
 def get_book(book_id: int, db: Session = Depends(get_db)):
     book = db.query(models.Book).filter(models.Book.id == book_id).first()
     if not book:
@@ -99,4 +99,5 @@ def delete_book(book_id: int, db: Session = Depends(get_db)):
     db.commit()
 
     return None
+
 
