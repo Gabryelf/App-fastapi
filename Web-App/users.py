@@ -7,7 +7,7 @@ from database import get_session
 router = APIRouter(prefix="/books", tags=["books"])
 
 # СОЗДАТЬ книгу
-@router.post("/", response_model=schemas.BookResponse, status_code=status.HTTP_201_CREATED)
+@router.post("/", response_model=schemas.UserResponse, status_code=status.HTTP_201_CREATED)
 def create_book(
     book: schemas.BookCreate,
     db: Session = Depends(get_db),
@@ -63,7 +63,7 @@ def get_book(book_id: int, db: Session = Depends(get_db)):
     return book
 
 # ОБНОВИТЬ книгу
-@router.put("/{book_id}", response_model=schemas.BookResponse)
+@router.put("/{book_id}", response_model=schemas.UserResponse)
 def update_book(
     book_id: int,
     book_update: schemas.BookCreate,
@@ -99,3 +99,4 @@ def delete_book(book_id: int, db: Session = Depends(get_db)):
     db.commit()
 
     return None
+
