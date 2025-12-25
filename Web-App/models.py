@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, String, Text, DateTime, Float, Boolean, ForeignKey, Enum, Table
+from sqlalchemy import UniqueConstraint
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 import enum
@@ -108,4 +109,5 @@ class TripApplication(Base):
     applicant = relationship("User", back_populates="trip_applications")
 
     # Уникальный ключ, чтобы пользователь не мог подать две заявки на одну поездку
+
     __table_args__ = (UniqueConstraint('trip_id', 'applicant_id', name='_trip_applicant_uc'),)
